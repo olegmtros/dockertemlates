@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+
+  redmine:
+    image: redmine
+    container_name: redmine
+    build: .
+    volumes:
+      - ./redmine/plugins:/usr/src/redmine/plugins
+      - ./redmine/themes:/usr/src/redmine/public/themes
+      - ./redmine/files:/usr/src/redmine/files
+    restart: always
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_POSTGRES: redmine-db
+      REDMINE_DB_USERNAME: redminea
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_DB_PASSWORD: db_password
+      REDMINE_PLUGINS_MIGRATE: 1
+
+  db:
+    image: postgres
+    container_name: redmine-db
+    volumes:
+      - ./db/data:/var/lib/mysql
+    restart: always
+    environment:
+      POSTGRES_USER: redminea
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: redmine
