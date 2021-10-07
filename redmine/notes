@@ -1,0 +1,3 @@
+volumes in compose. if add new one, shell do 'docker rm %container%'
+container dont need a network for conversation.
+naming is fine.
